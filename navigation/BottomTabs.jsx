@@ -2,13 +2,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../screens/Home';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-import Favorites from '../screens/Favorites';
-import Settings from '../screens/Settings';
 import { Ionicons } from '@expo/vector-icons';
 import { useColorScheme } from 'nativewind';
 import QuizStack from './QuizStack';
-import Misbaha from '../screens/Misbaha';
-import MaterialTopTabs from './MaterialTopTabs';
+import Test from '../screens/Test';
+import Draggable from '../screens/Draggable';
+import FinalDrag from '../screens/FinalDrag';
+import FillintheBlank from '../screens/FillintheBlank';
+import Exercises from '../screens/Exercises';
 
 const Tab = createBottomTabNavigator();
 
@@ -47,7 +48,8 @@ const BottomTabs = () => {
   
   const HomeOption = {
     tabBarIcon: ({ color }) => 
-      <MaterialCommunityIcons name="home" size={24} color={color} /> 
+      <MaterialCommunityIcons name="react" size={24} color={color} />, 
+      headerShown: false,
   }
   const FavoritesOption = {
     tabBarIcon: ({ color }) => 
@@ -61,7 +63,7 @@ const BottomTabs = () => {
   }
   const MisbahaOption = {
     tabBarIcon: ({ color }) => 
-      <MaterialCommunityIcons name="timer" size={24} color={color} />,
+      <MaterialCommunityIcons name="react" size={24} color={color} />,
       headerShown: true,
   }
   const MorningOption = {
@@ -77,11 +79,11 @@ const BottomTabs = () => {
   
   return (
     <Tab.Navigator screenOptions={screenOptions}>
-      <Tab.Screen name="الرئيسية" component={QuizStack} options={HomeOption}/>
-      <Tab.Screen name="المفضلة" component={Favorites} options={FavoritesOption}/>
-      <Tab.Screen name="المسبحة" component={Misbaha} options={MisbahaOption}/>
-      <Tab.Screen name="الأذكار" component={MaterialTopTabs} options={AdkarOptions}/>
-      <Tab.Screen name="الإعدادات" component={Settings} options={SettingsOption}/>
+      <Tab.Screen name="Home" component={QuizStack} options={HomeOption}/>
+      <Tab.Screen name="Exercises" component={Exercises} options={AdkarOptions}/>
+      {/* <Tab.Screen name="Test" component={Test} options={HomeOption}/>
+      <Tab.Screen name="Draggable" component={Draggable} options={HomeOption}/>
+      <Tab.Screen name="Draggazble" component={FinalDrag} options={SettingsOption}/> */}
     </Tab.Navigator>
   )
 }

@@ -12,7 +12,6 @@ import { Appbar } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useColorScheme } from 'nativewind';
 import Details from '../screens/Details';
-import SunahDetails from '../screens/SunahDetails';
 
 const Stack = createStackNavigator();
 
@@ -72,9 +71,8 @@ const QuizStack = () => {
 
   return (
     <Stack.Navigator screenOptions={screenOptions}>
-      <Stack.Screen name="السنن" component={Home} />
+      <Stack.Screen name="React Master" component={Home} />
       <Stack.Screen name="Details" component={Details} />
-      <Stack.Screen name="SunahDetails" component={SunahDetails} />
     </Stack.Navigator>
   );
 };

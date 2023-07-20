@@ -1,60 +1,17 @@
-import { View, Text, Pressable, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Pressable, Image } from 'react-native'
 import React from 'react'
-import { data } from '../data'
-import { useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { FontAwesome5 } from '@expo/vector-icons';
-import { useColorScheme } from 'nativewind'
+import { reactData } from '../reactData'
+
 const Home = ({navigation}) => {
-
-  const color = useSelector(state => state.app.themeColor.list)
-  const textColor = useSelector(state => state.app.themeColor.background)
-  const p = "pink-400"
-
-  const countTotalObjects = (arr) => {
-    let count = 0;
-
-    arr.forEach((item) => {
-      if (item.hasOwnProperty('sunan')) {
-        count += countTotalObjects(item.sunan); // Recursively count objects in nested arrays
-      } else {
-        count++; // Increment count for the current object
-      }
-    });
-
-    return count;
-  };
-
-  const totalObjects = countTotalObjects(data);
-
-  useEffect(() => {
-    navigation.setOptions({
-      title: totalObjects + " سنة" ,
-    });
-  }, [navigation]);
-
-
-  const { colorScheme, setColorScheme } = useColorScheme();
-  const cardColor = colorScheme === "dark" ? textColor : "white"
-  const numberColor = colorScheme === "dark" ? "white" : textColor
-
   return (
-    <ScrollView showsVerticalScrollIndicator={false}> 
-      <View className="space-y-3 p-3 items-center justify-center ">
-        {data.map(item => (
-          <View key={item.id} className={`shadow-md ${color} shadow-black dark:bg-slate-700 w-full rounded-md`}>
-            <Pressable 
-              android_ripple={{color: "gray"}} className="p-4 flex-row space-x-5 justify-end items-center" 
-              onPress={() => navigation.navigate("Details", {id: item.id, title: item.title})}
-            >
-  
-              {item.sunan?.length > 0 && <Text className="font-[CairoB] text-lg text-white">{item.sunan?.length}</Text>}
-              <Text className="font-[CairoB] text-lg text-white ">{item.title}</Text>
-
-           
-
-              <View className="w-10 h-10 items-center justify-center rounded-md " style={{backgroundColor: cardColor}} >
-                <Text className={`font-bold text-lg`} style={{color: numberColor}} >{item.id}</Text>
+    <ScrollView showsVerticalScrollIndicator={false} className=" ">
+      <View className="items-start justify-center flex-row flex-wrap gap-3 p-3">
+        {reactData.map(item => (
+          <View className="w-40 bg-white shadow-md shadow-black flex-grow dark:bg-slate-700" key={item.id}>
+            <Pressable android_ripple={{color: "gray"}} className="items-center" onPress={() => navigation.navigate("Details", {id: item.id})}>
+              <Image source={item.img} className="w-[90%] h-40" resizeMode='contain'/>
+              <View className="p-2">
+                <Text className="font-bold text-lg text-center dark:text-white">{item.title}</Text>
               </View>
             </Pressable>
           </View>

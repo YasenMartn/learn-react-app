@@ -1,19 +1,40 @@
-import { View, Text, Pressable, ScrollView } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { data } from '../data';
-import { MaterialIcons } from '@expo/vector-icons';
-import { IconButton } from 'react-native-paper';
-import { useColorScheme } from 'nativewind';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useSelector } from 'react-redux';
+import { View, Text, ScrollView, Button } from 'react-native'
+import React from 'react'
+import { reactData } from '../reactData'
+import { useEffect } from 'react';
+import ExerciseUI from '../components/ExerciseUI';
+import LearnUI from '../components/LearnUI';
+import { useState } from 'react';
 
-const Details = ({ route, navigation }) => {
+const Details = ({route, navigation}) => {
 
-  const themeColor = useSelector(state => state.app.themeColor.list)
+  const {id} = route.params;
+  const {title, data} = reactData.find(item => item.id === id)
+  const [currentItemIndex, setCurrentItemIndex] = useState(0);
 
-  const { id, title } = route.params;
-  const foundItem = data.find(item => item.id === id);
-  const { sunan } = foundItem;
+
+  const handleNext = () => {
+    if (currentItemIndex === data.length - 1) {
+      navigation.navigate("Learn React in Arabic")
+    }
+    setCurrentItemIndex((prevIndex) => prevIndex + 1);
+  };
+
+  const currentItem = data[currentItemIndex];
+
+  let componentToRender = null;
+
+  if (currentItem) {
+    if (currentItem.type === "lesson") {
+      componentToRender = (
+        <LearnUI data={currentItem.lessonData} onNext={handleNext} />
+      );
+    } else if (currentItem.type === "exercise") {
+      componentToRender = (
+        <ExerciseUI data={currentItem.exerciseData[0]} onNext={handleNext} />
+      );
+    }
+  }
 
   useEffect(() => {
     navigation.setOptions({
@@ -21,81 +42,11 @@ const Details = ({ route, navigation }) => {
     });
   }, [navigation, title]);
 
-  const { colorScheme, setColorScheme } = useColorScheme();
-  const color = colorScheme === 'light' ? '#fff' : '#fff';
-
-  const [favorites, setFavorites] = useState([]);
-
-  // Load favorites from AsyncStorage on component mount
-  useEffect(() => {
-    loadFavorites();
-  }, []);
-
-  // Check if an item is marked as favorite
-  const isFavorite = (itemId) => favorites.includes(itemId);
-
-  // Toggle the favorite status of an item
-  const toggleFav = (itemId) => {
-    setFavorites(prevFavorites => {
-      if (prevFavorites.includes(itemId)) {
-        return prevFavorites.filter(favId => favId !== itemId);
-      } else {
-        return [...prevFavorites, itemId];
-      }
-    });
-  }
-
-  // Save favorites to AsyncStorage
-  const saveFavorites = async () => {
-    try {
-      await AsyncStorage.setItem('favorites', JSON.stringify(favorites));
-    } catch (error) {
-      console.error('Error saving favorites:', error);
-    }
-  };
-
-  // Load favorites from AsyncStorage
-  const loadFavorites = async () => {
-    try {
-      const storedFavorites = await AsyncStorage.getItem('favorites');
-      if (storedFavorites) {
-        setFavorites(JSON.parse(storedFavorites));
-      }
-    } catch (error) {
-      console.error('Error loading favorites:', error);
-    }
-  };
-
-  // Save favorites to AsyncStorage when the favorites state changes
-  useEffect(() => {
-    saveFavorites();
-  }, [favorites]);
-
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View className="space-y-3 p-3 items-center justify-center ">
-        {sunan?.map(item => (
-          <View key={item.id} className={`shadow-md shadow-black ${themeColor} dark:bg-slate-700 w-full rounded-md`}>
-            <Pressable android_ripple={{ color: 'gray' }} className="p-2 pl-0 justify-between items-center flex-row"
-              onPress={() => navigation.navigate('SunahDetails', { item })}
-            >
-              <IconButton
-                onPress={() => toggleFav(item.id)}
-                size={21}
-                icon={() => (
-                  <MaterialIcons name={isFavorite(item.id) ? 'favorite' : 'favorite-outline'} size={24}
-                    color={isFavorite(item.id) ? 'red' : color}
-                  />
-                )}
-              />
-              <Text className="font-[CairoB] text-lg text-white flex-shrink">{item.ahadith?.length}</Text>
-              <Text className="font-[CairoB] text-lg text-white flex-shrink">{item.title}</Text>
-            </Pressable>
-          </View>
-        ))}
-      </View>
-    </ScrollView>
+    <View className="flex-1">
+      {componentToRender}
+    </View>
   )
 }
 
-export default Details;
+export default Details

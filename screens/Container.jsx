@@ -9,7 +9,9 @@ import { StatusBar } from 'expo-status-bar';
 
 const Container = () => {
 
-  const color = useSelector(state => state.app.themeColor.background)
+  const color = "#1f1451"
+  //gray 282c34
+  //blue 61DAFB
 
   const { colorScheme, setColorScheme } = useColorScheme();
   //blue 3b82f6
@@ -19,7 +21,7 @@ const Container = () => {
     dark: false,
     colors: {
       primary: color,
-      background: '#fff',
+      background: '#eeeeee',
       card: color, //header color
       // text: '#000',
       // border: '#4B0082',
@@ -30,10 +32,10 @@ const Container = () => {
   const darkTheme = {
     dark: false,
     colors: {
-      primary: color,
+      primary: "#61DAFB",
       background: '#1e293b',
       card: color, //header color
-      text: '#fff',
+      text: "#61DAFB",
       // border: '#4B0082',
       // notification: '#4B0082',
     },

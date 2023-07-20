@@ -4,8 +4,10 @@ import { FontAwesome } from '@expo/vector-icons';
 import CustomDrawer from '../components/CustomDrawer';
 import QuizStack from './QuizStack';
 import BottomTabs from './BottomTabs';
-import Settings from '../screens/Settings';
 import { useSelector } from 'react-redux';
+import FillintheBlank from '../screens/FillintheBlank';
+import MultipleChoice from '../components/MultipleChoice';
+import Fill from '../components/Fill';
 
 
 const Drawer = createDrawerNavigator();
@@ -19,10 +21,6 @@ const homeOptions = {
 }
 
 const DrawerNav = () => {
-
-  const color = useSelector(state => state.app.themeColor.background)
-
-
   const screenOptions = () => {
     return {
       headerStyle: {
@@ -35,7 +33,7 @@ const DrawerNav = () => {
       headerTitleStyle: {
         fontFamily: "CairoB",
       },
-      drawerActiveBackgroundColor: color,
+      drawerActiveBackgroundColor: "#61DAFB",
       drawerActiveTintColor: "white", 
       // drawerInactiveTintColor: "black", 
       drawerPosition: "right",
@@ -57,6 +55,8 @@ const DrawerNav = () => {
   return (
     <Drawer.Navigator screenOptions={screenOptions} drawerContent={(props) => <CustomDrawer {...props} />}>
       <Drawer.Screen name="الصفحة الرئيسية" component={BottomTabs} options={homeOptions}/>
+      <Drawer.Screen name="Multiple Choice" component={MultipleChoice} options={homeOptions}/>
+      <Drawer.Screen name="Fill in the Blank" component={Fill} options={homeOptions}/>
     </Drawer.Navigator>
   )
 }
