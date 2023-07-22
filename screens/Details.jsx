@@ -5,18 +5,23 @@ import { useEffect } from 'react';
 import ExerciseUI from '../components/ExerciseUI';
 import LearnUI from '../components/LearnUI';
 import { useState } from 'react';
+import * as Progress from 'react-native-progress';
 
 const Details = ({route, navigation}) => {
 
   const {id} = route.params;
   const {title, data} = reactData.find(item => item.id === id)
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
 
+  const dataLength = data.length - 1
 
   const handleNext = () => {
-    if (currentItemIndex === data.length - 1) {
-      navigation.navigate("Learn React in Arabic")
+    if (currentItemIndex === dataLength) {
+      navigation.navigate("React Master")
     }
+    const newProgress = (currentItemIndex + 1) / (dataLength + 1);
+    setProgress(newProgress);
     setCurrentItemIndex((prevIndex) => prevIndex + 1);
   };
 
@@ -27,11 +32,11 @@ const Details = ({route, navigation}) => {
   if (currentItem) {
     if (currentItem.type === "lesson") {
       componentToRender = (
-        <LearnUI data={currentItem.lessonData} onNext={handleNext} />
+        <LearnUI data={currentItem.lessonData} onNext={handleNext} dataLength={dataLength} currentItemIndex={currentItemIndex}/>
       );
     } else if (currentItem.type === "exercise") {
       componentToRender = (
-        <ExerciseUI data={currentItem.exerciseData[0]} onNext={handleNext} />
+        <ExerciseUI data={currentItem.exerciseData[0]} onNext={handleNext} dataLength={dataLength} currentItemIndex={currentItemIndex}/>
       );
     }
   }
@@ -44,6 +49,16 @@ const Details = ({route, navigation}) => {
 
   return (
     <View className="flex-1">
+      <View className="p-3 rotate-180">
+        <Progress.Bar 
+          progress={progress} 
+          width={null} 
+          unfilledColor='#93c5fd' 
+          height={10} 
+          borderRadius={10}  
+          borderWidth={0}
+        />
+      </View>
       {componentToRender}
     </View>
   )

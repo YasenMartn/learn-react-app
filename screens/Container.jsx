@@ -20,7 +20,7 @@ const Container = () => {
   const lightTheme = {
     dark: false,
     colors: {
-      primary: color,
+      primary: "#61DAFB",
       background: '#eeeeee',
       card: color, //header color
       // text: '#000',

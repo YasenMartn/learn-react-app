@@ -15,7 +15,7 @@ import Details from '../screens/Details';
 
 const Stack = createStackNavigator();
 
-const QuizStack = () => {
+const HomeStack = () => {
 
   const { colorScheme, setColorScheme } = useColorScheme();
   const [isMoonIcon, setIsMoonIcon] = useState(true);
@@ -77,4 +77,4 @@ const QuizStack = () => {
   );
 };
 
-export default QuizStack;
+export default HomeStack;

@@ -2,12 +2,11 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import Home from '../screens/Home';
 import { FontAwesome } from '@expo/vector-icons';
 import CustomDrawer from '../components/CustomDrawer';
-import QuizStack from './QuizStack';
-import BottomTabs from './BottomTabs';
+import HomeStack from './HomeStack';
 import { useSelector } from 'react-redux';
-import FillintheBlank from '../screens/FillintheBlank';
 import MultipleChoice from '../components/MultipleChoice';
 import Fill from '../components/Fill';
+import Test from '../components/Test';
 
 
 const Drawer = createDrawerNavigator();
@@ -54,9 +53,11 @@ const DrawerNav = () => {
   
   return (
     <Drawer.Navigator screenOptions={screenOptions} drawerContent={(props) => <CustomDrawer {...props} />}>
-      <Drawer.Screen name="الصفحة الرئيسية" component={BottomTabs} options={homeOptions}/>
+      {/* <Drawer.Screen name="الصفحة الرئيسية" component={BottomTabs} options={homeOptions}/> */}
+      <Drawer.Screen name="الصفحة الرئيسية" component={HomeStack} options={homeOptions}/>
       <Drawer.Screen name="Multiple Choice" component={MultipleChoice} options={homeOptions}/>
       <Drawer.Screen name="Fill in the Blank" component={Fill} options={homeOptions}/>
+      <Drawer.Screen name="Filly" component={Test} options={homeOptions}/>
     </Drawer.Navigator>
   )
 }

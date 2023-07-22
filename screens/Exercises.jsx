@@ -3,7 +3,7 @@ import React from 'react'
 
 const data = [
   {
-    title: "Fill in the Blank",
+    title: "",
   },
   {
     title: "Multiple Choice",
@@ -16,7 +16,7 @@ const Exercises = () => {
       {data.map((item, index) => (
         <View key={index} className="bg-blue-400 w-44 h-40">
           <Pressable android_ripple={{color: "white"}} className="w-44 h-40 p-5">
-            <Text className="text-white">{item.title}</Text>
+            <Text className="text-white ">{item.title}</Text>
           </Pressable>
         </View>
       ))}

@@ -6,7 +6,7 @@ import { Button } from 'react-native-paper'
 
 const data = [
   {
-    question: "Fill in the blank to create a valid span tag",
+    question: "Fill in the blank to create a React Functional component",
     text: "Hello World",
     part2: "</span>",
     answer: "<span>",
